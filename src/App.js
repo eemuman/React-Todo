@@ -1,9 +1,8 @@
 import Navbar from "react-bootstrap/Navbar";
-import "./App.css";
 import { Routes, Route, Link, HashRouter } from "react-router-dom";
-import AboutPage from "./AboutPage";
-import OptionsPage from "./OptionsPage";
-import MainPage from "./MainPage";
+import AboutPage from "./Pages/AboutPage";
+import OptionsPage from "./Pages/OptionsPage";
+import MainPage from "./Pages/MainPage";
 import { Container, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
