@@ -18,13 +18,15 @@ function App() {
             </Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">
-                Home
+                Koti
               </Nav.Link>
               <Nav.Link as={Link} to="/Options">
-                Options
+                Asetukset
               </Nav.Link>
+            </Nav>
+            <Nav>
               <Nav.Link as={Link} to="/About">
-                About
+                Tietoja
               </Nav.Link>
             </Nav>
           </Container>
