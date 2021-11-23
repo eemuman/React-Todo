@@ -1,9 +1,24 @@
-import React from "react";
+import { Container, Card } from "react-bootstrap";
 
-export default function MainPage() {
-  return (
-    <div>
-      <h1>Main Page</h1>
-    </div>
-  );
+import React, { Component } from "react";
+import DataHandler from "../Objects/DataHandler";
+
+export default class MainPage extends Component {
+  render() {
+    return (
+      <>
+        <Container>
+          <Card>
+            <div>
+              <DataHandler
+                cards={this.props.cards}
+                updCards={this.props.updCards}
+                curId={this.props.curId}
+              />
+            </div>
+          </Card>
+        </Container>
+      </>
+    );
+  }
 }
