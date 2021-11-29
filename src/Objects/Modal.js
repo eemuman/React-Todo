@@ -1,88 +1,70 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import InForm from "./Form";
 
-export default class ThisModal extends Component {
-  constructor(props) {
-    super(props);
-    this.createT = props.createT;
-    this.Btn2 = "Tallenna";
-    this.Btn3 = "Peru";
-    this.ThtLS = "Tehtävän lisätiedot";
-    this.ThtOS = "Tehtävän Otsikko";
+export default function ThisModal(props) {
+  var createT = props.createT;
+  var Btn2 = "Tallenna";
+  var Btn3 = "Peru";
+  var ThtLS = "Tehtävän lisätiedot";
+  var ThtOS = "Tehtävän otsikko";
 
-    this.state = {
-      setShow: false,
-      title: "",
-      text: "",
-    };
-  }
+  const [show, setShow] = useState(false);
+  const [title, setTitle] = useState(props.title != null ? props.title : "");
+  const [text, setText] = useState(props.text != null ? props.text : "");
 
-  handleClose = () => this.setState({ setShow: false });
-  handleShow = () => {
-    this.flushState();
-    this.setState({ setShow: true });
+  const flushState = (newTitle, newText) => {
+    setTitle(newTitle != null ? newTitle : "");
+    setText(newText != null ? newText : "");
   };
-  flushState = () => {
-    this.props.data !== null
-      ? this.setState({
-          title: this.props.data.title,
-          text: this.props.data.text,
-        })
-      : this.setState({
-          title: "",
-          text: "",
-        });
-  };
-  handleTitle = (data) => this.setState({ title: data });
-  handleText = (data) => this.setState({ text: data });
 
-  render() {
-    return (
-      <>
-        <Button
-          variant={this.props.BtnStyle}
-          size={this.props.BtnSize}
-          onClick={this.handleShow}
-          style={{ margin: "5px" }}
-        >
-          {this.createT}
-        </Button>
-        <Modal
-          show={this.state.setShow}
-          onHide={this.handleClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>{this.createT}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <InForm
-              ThtOS={this.ThtOS}
-              ThtLS={this.ThtLS}
-              title={this.state.title}
-              text={this.state.text}
-              onChangeTitle={this.handleTitle}
-              onChangeText={this.handleText}
-            ></InForm>
-          </Modal.Body>
-          <Modal.Footer justify-content-between={+true}>
-            <Button
-              variant="primary"
-              onClick={() => {
-                this.props.upData(this.state);
-                this.handleClose();
-              }}
-            >
-              {this.Btn2}
-            </Button>
-            <Button variant="secondary" onClick={this.handleClose}>
-              {this.Btn3}
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    );
-  }
+  return (
+    <>
+      <Button
+        variant={props.BtnStyle}
+        size={props.BtnSize}
+        onClick={() => {
+          setShow(true);
+          flushState(props.title, props.text);
+        }}
+        style={{ margin: "5px" }}
+      >
+        {createT}
+      </Button>
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{createT}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InForm
+            ThtOS={ThtOS}
+            ThtLS={ThtLS}
+            title={title}
+            text={text}
+            onChangeTitle={setTitle}
+            onChangeText={setText}
+          ></InForm>
+        </Modal.Body>
+        <Modal.Footer justify-content-between={+true}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              props.upData(title, text);
+              setShow(false);
+            }}
+          >
+            {Btn2}
+          </Button>
+          <Button variant="secondary" onClick={() => setShow(false)}>
+            {Btn3}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }

@@ -1,24 +1,51 @@
-import { Container, Card } from "react-bootstrap";
+import { DragDropContext } from "react-beautiful-dnd";
+import ThisModal from "../Objects/Modal";
+import Column from "../Objects/Column";
+import React from "react";
+import { Card } from "react-bootstrap";
 
-import React, { Component } from "react";
-import DataHandler from "../Objects/DataHandler";
+export default function MainPage(props) {
+  var createT = "Lisää tehtävä";
 
-export default class MainPage extends Component {
-  render() {
-    return (
-      <>
-        <Container>
-          <Card>
-            <div>
-              <DataHandler
-                cards={this.props.cards}
-                updCards={this.props.updCards}
-                curId={this.props.curId}
-              />
-            </div>
-          </Card>
-        </Container>
-      </>
-    );
-  }
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+
+    var dragged = props.CurCards.find((card) => card.dragId === draggableId);
+
+    props.setCards((prevArray) => {
+      prevArray.splice(source.index, 1);
+      prevArray.splice(destination.index, 0, dragged);
+      return prevArray;
+    });
+  };
+
+  return (
+    <div>
+      <div>
+        <ThisModal
+          upData={props.upData}
+          createT={createT}
+          BtnStyle="primary"
+          BtnSize="lg"
+        />
+      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Column
+          cards={props.CurCards}
+          delete={props.delete}
+          upCard={props.upCard}
+        />
+      </DragDropContext>
+      {props.CurCards.length === 0 && (
+        <h1 style={{ textAlign: "center" }}>TEHTÄVÄLISTA ON TYHJÄ!</h1>
+      )}
+    </div>
+  );
 }

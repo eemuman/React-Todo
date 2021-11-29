@@ -13,7 +13,7 @@ export default function navbar() {
             Koti
           </Nav.Link>
           <Nav.Link as={Link} to="/Options">
-            Asetukset
+            Haku
           </Nav.Link>
         </Nav>
         <Nav>
