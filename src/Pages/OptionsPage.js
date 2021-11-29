@@ -1,9 +1,10 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 
 export default function OptionsPage() {
   return (
-    <div>
-      <h1>Options Page</h1>
-    </div>
+    <Container>
+      <h1>HAKU</h1>
+    </Container>
   );
 }
