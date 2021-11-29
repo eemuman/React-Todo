@@ -2,7 +2,6 @@ import { DragDropContext } from "react-beautiful-dnd";
 import ThisModal from "../Objects/Modal";
 import Column from "../Objects/Column";
 import React from "react";
-import { Card } from "react-bootstrap";
 
 export default function MainPage(props) {
   var createT = "Lisää tehtävä";

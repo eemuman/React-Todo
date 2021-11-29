@@ -43,6 +43,18 @@ export default function InForm(props) {
             />
           </FloatingLabel>
         </Form.Group>
+        <Form.Group>
+          <>
+            <Form.Label htmlFor="bgColor">Valitse tagin taustaväri:</Form.Label>
+            <Form.Control
+              type="color"
+              id="bgColor"
+              defaultValue="#563d7c"
+              title="Choose your color"
+              onChange={(e) => props.onChangeColor(e)}
+            />
+          </>
+        </Form.Group>
       </Form>
     </>
   );

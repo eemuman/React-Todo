@@ -12,6 +12,7 @@ export default function ThisModal(props) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState(props.title != null ? props.title : "");
   const [text, setText] = useState(props.text != null ? props.text : "");
+  const [bgColor, setBgColor] = useState();
 
   const flushState = (newTitle, newText) => {
     setTitle(newTitle != null ? newTitle : "");
@@ -48,6 +49,8 @@ export default function ThisModal(props) {
             text={text}
             onChangeTitle={setTitle}
             onChangeText={setText}
+            onChangeColor={setBgColor}
+            bgColor={bgColor}
           ></InForm>
         </Modal.Body>
         <Modal.Footer justify-content-between={+true}>
