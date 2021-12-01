@@ -1,13 +1,14 @@
-import { Routes, Route, HashRouter } from "react-router-dom";
-import AboutPage from "./Pages/AboutPage";
-import OptionsPage from "./Pages/OptionsPage";
-import MainPage from "./Pages/MainPage";
-import Navbar from "./Objects/Navbar";
-import React, { Component } from "react";
+import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/custom.css";
+import DataHandler from "./Objects/DataHandler";
 
+export default function App() {
+  return <DataHandler />;
+}
+
+/*
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -24,25 +25,8 @@ export default class App extends Component {
 
   render() {
     return (
-      <>
-        <HashRouter>
-          <Navbar />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <MainPage
-                  cards={this.mainCardArray}
-                  updCards={this.updMainCardArray}
-                  curId={this.state.id}
-                />
-              }
-            />
-            <Route path="/About" element={<AboutPage />} />
-            <Route path="/Options" element={<OptionsPage />} />
-          </Routes>
-        </HashRouter>
-      </>
+
     );
   }
 }
+*/

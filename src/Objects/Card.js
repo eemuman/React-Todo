@@ -1,27 +1,26 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import ThisModal from "./Modal";
 import { Draggable } from "react-beautiful-dnd";
 
-export default class card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: this.props.title,
-      text: this.props.text,
-      id: this.props.id,
-      dragId: this.props.dragId,
-    };
-  }
+export default function Cards(props) {
+  const [title, setTitle] = useState(props.title);
+  const [text, setText] = useState(props.text);
+  const [id] = useState(props.id);
+  const [dragId] = useState(props.dragId);
 
-  upData = (data) => {
-    this.setState({ title: data.title, text: data.text });
-    this.forceUpdate();
+  var upData = (newTitle, newText) => {
+    setTitle(newTitle);
+    setText(newText);
   };
 
-  render() {
-    return (
-      <Draggable draggableId={this.state.dragId} index={this.props.index}>
+  useEffect(() => {
+    props.upCard(title, text, id);
+  });
+
+  return (
+    <div>
+      <Draggable draggableId={dragId} index={props.index}>
         {(provided) => (
           <div
             ref={provided.innerRef}
@@ -38,22 +37,23 @@ export default class card extends Component {
                 textAlign: "center",
               }}
             >
-              <Card.Header as="h5">{this.state.title}</Card.Header>
+              <Card.Header as="h5">{title}</Card.Header>
               <Card.Body>
-                <Card.Text>{this.state.text}</Card.Text>
+                <Card.Text>{text}</Card.Text>
               </Card.Body>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <ThisModal
                   BtnStyle="outline-primary"
-                  data={this.state}
-                  upData={this.upData}
+                  title={title}
+                  text={text}
+                  upData={upData}
                   createT={"Muokkaa"}
                 />
                 <Button
                   style={{ margin: "5px" }}
                   variant="outline-danger"
                   onClick={() => {
-                    this.props.removeCard(this.state.id);
+                    props.delete(id);
                   }}
                 >
                   Poista Kortti
@@ -63,6 +63,6 @@ export default class card extends Component {
           </div>
         )}
       </Draggable>
-    );
-  }
+    </div>
+  );
 }
