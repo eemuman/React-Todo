@@ -19,7 +19,10 @@ export default function AboutPage() {
         <h5>Sivuston tekijä: </h5> <span>Eemil Väänänen</span>
         <hr></hr>
         <h5>Sivustolla käytetyt kirjastot:</h5>
-        <span>React, React-Router, React-Bootstrap</span>
+        <span>
+          React, React-Router, React-Bootstrap, React-Beautiful-DnD,
+          React-TimeAgo
+        </span>
       </Card.Body>
     </Container>
   );

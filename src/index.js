@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import TimeAgo from "javascript-time-ago";
 import App from "./App";
+import fi from "javascript-time-ago/locale/fi.json";
+
+TimeAgo.addDefaultLocale(fi);
 
 ReactDOM.render(
   <React.StrictMode>
