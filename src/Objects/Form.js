@@ -43,6 +43,14 @@ export default function InForm(props) {
             />
           </FloatingLabel>
         </Form.Group>
+        <Form.Group>
+          <Form.Control
+            type="tags"
+            placeholder="Tagi"
+            size="sm"
+            onChange={(e) => props.onChangeTags(e.target.value)}
+          />
+        </Form.Group>
       </Form>
     </>
   );

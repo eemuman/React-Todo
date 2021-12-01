@@ -12,10 +12,12 @@ export default function ThisModal(props) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState(props.title != null ? props.title : "");
   const [text, setText] = useState(props.text != null ? props.text : "");
+  const [tags, setTags] = useState(props.tags != null ? props.tags : "");
 
-  const flushState = (newTitle, newText) => {
+  const flushState = (newTitle, newText, newTags) => {
     setTitle(newTitle != null ? newTitle : "");
     setText(newText != null ? newText : "");
+    setTags(newTags != null ? newTags : "");
   };
 
   return (
@@ -25,7 +27,7 @@ export default function ThisModal(props) {
         size={props.BtnSize}
         onClick={() => {
           setShow(true);
-          flushState(props.title, props.text);
+          flushState(props.title, props.text, props.tags);
         }}
         style={{ margin: "5px" }}
       >
@@ -48,13 +50,14 @@ export default function ThisModal(props) {
             text={text}
             onChangeTitle={setTitle}
             onChangeText={setText}
+            onChangeTags={setTags}
           ></InForm>
         </Modal.Body>
         <Modal.Footer justify-content-between={+true}>
           <Button
             variant="primary"
             onClick={() => {
-              props.upData(title, text);
+              props.upData(title, text, tags);
               setShow(false);
             }}
           >
