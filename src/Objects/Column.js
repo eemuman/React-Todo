@@ -17,6 +17,8 @@ export default function Column(props) {
                 dragId={kortti.dragId}
                 title={kortti.title}
                 text={kortti.text}
+                tags={kortti.tags}
+                bgColor={kortti.bgColor}
                 upCard={props.upCard}
                 delete={props.delete}
               />

@@ -10,7 +10,7 @@ export default function DataHandler() {
   const [cards, setCards] = useState([]);
   const [id, setId] = useState(0);
 
-  const updCards = (newTitle, newText) => {
+  const updCards = (newTitle, newText, newTag) => {
     setId(id + 1);
     var data = {
       id: id,
@@ -18,6 +18,7 @@ export default function DataHandler() {
       key: id.toString(),
       title: newTitle,
       text: newText,
+      tags: newTag,
       removeCard: deleteCards,
     };
     setCards((prevArray) => [data, ...prevArray]);

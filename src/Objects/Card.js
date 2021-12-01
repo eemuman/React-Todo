@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Badge } from "react-bootstrap";
 import ThisModal from "./Modal";
 import { Draggable } from "react-beautiful-dnd";
 
 export default function Cards(props) {
   const [title, setTitle] = useState(props.title);
   const [text, setText] = useState(props.text);
+  const [tags, setTags] = useState(props.tags);
   const [id] = useState(props.id);
   const [dragId] = useState(props.dragId);
-
+  console.log(props.tags);
   var upData = (newTitle, newText) => {
     setTitle(newTitle);
     setText(newText);
@@ -40,6 +41,9 @@ export default function Cards(props) {
               <Card.Header as="h5">{title}</Card.Header>
               <Card.Body>
                 <Card.Text>{text}</Card.Text>
+                <Badge pill bg="secondary">
+                  #{tags}
+                </Badge>
               </Card.Body>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <ThisModal
