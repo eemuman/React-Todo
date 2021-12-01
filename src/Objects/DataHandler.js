@@ -11,6 +11,8 @@ export default function DataHandler() {
   const [id, setId] = useState(0);
 
   const updCards = (newTitle, newText, newTag) => {
+    const thisCreateDate = new Date();
+
     setId(id + 1);
     var data = {
       id: id,
@@ -18,7 +20,8 @@ export default function DataHandler() {
       key: id.toString(),
       title: newTitle,
       text: newText,
-      tags: newTag,
+      tag: newTag,
+      curDate: thisCreateDate,
       removeCard: deleteCards,
     };
     setCards((prevArray) => [data, ...prevArray]);
@@ -59,7 +62,29 @@ export default function DataHandler() {
                   }
                 />
                 <Route path="/About" element={<AboutPage />} />
-                <Route path="/Options" element={<OptionsPage />} />
+                <Route
+                  exact
+                  path="/Options"
+                  element={
+                    <OptionsPage
+                      cards={cards}
+                      delete={deleteCards}
+                      upCard={updCard}
+                      setCards={setCards}
+                    />
+                  }
+                />
+                <Route
+                  path="/Options/:tag"
+                  element={
+                    <OptionsPage
+                      cards={cards}
+                      delete={deleteCards}
+                      upCard={updCard}
+                      setCards={setCards}
+                    />
+                  }
+                />
               </Routes>
             </HashRouter>
           </>

@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import ThisModal from "./Modal";
 import { Draggable } from "react-beautiful-dnd";
+import { Link } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
 
 export default function Cards(props) {
   const [title, setTitle] = useState(props.title);
   const [text, setText] = useState(props.text);
-  const [tags, setTags] = useState(props.tags);
+  const [tags, setTags] = useState(props.tag);
   const [id] = useState(props.id);
   const [dragId] = useState(props.dragId);
-  console.log(props.tags);
+  const [curDate] = useState(props.curDate);
+
   var upData = (newTitle, newText) => {
     setTitle(newTitle);
     setText(newText);
@@ -41,9 +44,11 @@ export default function Cards(props) {
               <Card.Header as="h5">{title}</Card.Header>
               <Card.Body>
                 <Card.Text>{text}</Card.Text>
-                <Badge pill bg="secondary">
-                  #{tags}
-                </Badge>
+                <Link to={`/Options/${tags}`} state={{ filterValue: tags }}>
+                  <Badge pill bg="secondary">
+                    #{tags}
+                  </Badge>
+                </Link>
               </Card.Body>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <ThisModal
@@ -63,6 +68,9 @@ export default function Cards(props) {
                   Poista Kortti
                 </Button>
               </div>
+              <Card.Footer className="text-muted">
+                Muokattu: <ReactTimeAgo date={curDate} timeStyle="round" />
+              </Card.Footer>
             </Card>
           </div>
         )}
