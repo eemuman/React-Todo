@@ -28,6 +28,7 @@ export default function OptionsPage(props) {
         cards={filteredResults}
         delete={deleteCards}
         upCard={props.upCard}
+        setCompleted={props.setCompleted}
       />
       {filteredResults.length === 0 && (
         <h1 style={{ textAlign: "center" }}>EI HAKUTULOKSIA</h1>

@@ -11,15 +11,17 @@ export default function Cards(props) {
   const [tags, setTags] = useState(props.tag);
   const [id] = useState(props.id);
   const [dragId] = useState(props.dragId);
-  const [curDate] = useState(props.curDate);
+  const [curDate, setCurDate] = useState(props.curDate);
 
-  var upData = (newTitle, newText) => {
+  var upData = (newTitle, newText, newTag) => {
     setTitle(newTitle);
     setText(newText);
+    setTags(newTag);
+    setCurDate(new Date());
   };
 
   useEffect(() => {
-    props.upCard(title, text, id);
+    props.upCard(title, text, id, tags, curDate);
   });
 
   return (
@@ -55,9 +57,19 @@ export default function Cards(props) {
                   BtnStyle="outline-primary"
                   title={title}
                   text={text}
+                  tag={tags}
                   upData={upData}
                   createT={"Muokkaa"}
                 />
+                <Button
+                  onClick={() => {
+                    props.setCompleted(id);
+                  }}
+                  style={{ margin: "5px" }}
+                  variant="outline-success"
+                >
+                  Tehtävä valmis!
+                </Button>
                 <Button
                   style={{ margin: "5px" }}
                   variant="outline-danger"

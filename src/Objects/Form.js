@@ -45,6 +45,7 @@ export default function InForm(props) {
         </Form.Group>
         <Form.Group>
           <Form.Control
+            value={props.tag}
             type="tags"
             placeholder="Tagi"
             size="sm"

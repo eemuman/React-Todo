@@ -37,9 +37,18 @@ export default function MainPage(props) {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Column
+          draggableid={"new"}
           cards={props.CurCards}
           delete={props.delete}
           upCard={props.upCard}
+          setCompleted={props.setCompleted}
+        />
+        <Column
+          draggableid={"completed"}
+          cards={props.CurCompletedCards}
+          delete={props.delete}
+          upCard={props.upCard}
+          setCompleted={props.setCompleted}
         />
       </DragDropContext>
       {props.CurCards.length === 0 && (

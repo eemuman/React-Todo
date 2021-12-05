@@ -8,6 +8,7 @@ import { Container, Card } from "react-bootstrap";
 
 export default function DataHandler() {
   const [cards, setCards] = useState([]);
+  const [completedCards, setCompletedCards] = useState([]);
   const [id, setId] = useState(0);
 
   const updCards = (newTitle, newText, newTag) => {
@@ -31,12 +32,22 @@ export default function DataHandler() {
     setCards((prevArray) => prevArray.filter((cards) => cards.id !== id));
   };
 
-  const updCard = (newTitle, newText, id) => {
+  const setCompleted = (id) => {
+    var completed = cards.find((card) => card.id === id);
+    setCards((prevArray) => prevArray.filter((cards) => cards.id !== id));
+    setCompletedCards((prevArray) => [completed, ...prevArray]);
+  };
+
+  const updCard = (newTitle, newText, id, newTag, newDate) => {
     setCards((prevArray) => {
       var index = prevArray.findIndex((card) => card.id === id);
-      prevArray[index].title = newTitle;
-      prevArray[index].text = newText;
-
+      console.log(index);
+      if (index !== -1) {
+        prevArray[index].title = newTitle;
+        prevArray[index].text = newText;
+        prevArray[index].tag = newTag;
+        prevArray[index].curDate = newDate;
+      }
       return prevArray;
     });
   };
@@ -55,9 +66,11 @@ export default function DataHandler() {
                     <MainPage
                       upData={updCards}
                       CurCards={cards}
+                      CurCompletedCards={completedCards}
                       delete={deleteCards}
                       upCard={updCard}
                       setCards={setCards}
+                      setCompleted={setCompleted}
                     />
                   }
                 />
@@ -71,6 +84,7 @@ export default function DataHandler() {
                       delete={deleteCards}
                       upCard={updCard}
                       setCards={setCards}
+                      setCompleted={setCompleted}
                     />
                   }
                 />

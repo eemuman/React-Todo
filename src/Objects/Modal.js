@@ -12,7 +12,7 @@ export default function ThisModal(props) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState(props.title != null ? props.title : "");
   const [text, setText] = useState(props.text != null ? props.text : "");
-  const [tags, setTags] = useState(props.tags != null ? props.tags : "");
+  const [tags, setTags] = useState(props.tag != null ? props.tags : "");
 
   const flushState = (newTitle, newText, newTags) => {
     setTitle(newTitle != null ? newTitle : "");
@@ -27,7 +27,7 @@ export default function ThisModal(props) {
         size={props.BtnSize}
         onClick={() => {
           setShow(true);
-          flushState(props.title, props.text, props.tags);
+          flushState(props.title, props.text, props.tag);
         }}
         style={{ margin: "5px" }}
       >
@@ -48,6 +48,7 @@ export default function ThisModal(props) {
             ThtLS={ThtLS}
             title={title}
             text={text}
+            tag={tags}
             onChangeTitle={setTitle}
             onChangeText={setText}
             onChangeTags={setTags}
