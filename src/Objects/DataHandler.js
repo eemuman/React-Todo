@@ -31,6 +31,11 @@ export default function DataHandler() {
   const deleteCards = (id) => {
     setCards((prevArray) => prevArray.filter((cards) => cards.id !== id));
   };
+  const compDelete = (id) => {
+    setCompletedCards((prevArray) =>
+      prevArray.filter((cards) => cards.id !== id)
+    );
+  };
 
   const setCompleted = (id) => {
     var completed = cards.find((card) => card.id === id);
@@ -41,7 +46,7 @@ export default function DataHandler() {
   const updCard = (newTitle, newText, id, newTag, newDate) => {
     setCards((prevArray) => {
       var index = prevArray.findIndex((card) => card.id === id);
-      console.log(index);
+
       if (index !== -1) {
         prevArray[index].title = newTitle;
         prevArray[index].text = newText;
@@ -52,6 +57,25 @@ export default function DataHandler() {
     });
   };
 
+  const mainProps = {
+    upData: updCards,
+    CurCards: cards,
+    CurCompletedCards: completedCards,
+    delete: deleteCards,
+    updCard: updCard,
+    setCards: setCards,
+    setCompleted: setCompleted,
+    compDelete: compDelete,
+  };
+
+  const optionProps = {
+    CurCards: cards,
+    delete: deleteCards,
+    updCard: updCard,
+    setCards: setCards,
+    setCompleted: setCompleted,
+  };
+
   return (
     <div>
       <Container>
@@ -60,44 +84,16 @@ export default function DataHandler() {
             <HashRouter>
               <Navbar />
               <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <MainPage
-                      upData={updCards}
-                      CurCards={cards}
-                      CurCompletedCards={completedCards}
-                      delete={deleteCards}
-                      upCard={updCard}
-                      setCards={setCards}
-                      setCompleted={setCompleted}
-                    />
-                  }
-                />
+                <Route path="/" element={<MainPage {...mainProps} />} />
                 <Route path="/About" element={<AboutPage />} />
                 <Route
                   exact
                   path="/Options"
-                  element={
-                    <OptionsPage
-                      cards={cards}
-                      delete={deleteCards}
-                      upCard={updCard}
-                      setCards={setCards}
-                      setCompleted={setCompleted}
-                    />
-                  }
+                  element={<OptionsPage {...optionProps} />}
                 />
                 <Route
                   path="/Options/:tag"
-                  element={
-                    <OptionsPage
-                      cards={cards}
-                      delete={deleteCards}
-                      upCard={updCard}
-                      setCards={setCards}
-                    />
-                  }
+                  element={<OptionsPage {...optionProps} />}
                 />
               </Routes>
             </HashRouter>

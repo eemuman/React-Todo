@@ -37,7 +37,7 @@ export default function Cards(props) {
               bg="light"
               border="dark"
               style={{
-                width: "50%",
+                width: "90%",
                 marginLeft: "auto",
                 marginRight: "auto",
                 textAlign: "center",
@@ -52,7 +52,7 @@ export default function Cards(props) {
                   </Badge>
                 </Link>
               </Card.Body>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <ThisModal
                   BtnStyle="outline-primary"
                   title={title}
@@ -62,6 +62,7 @@ export default function Cards(props) {
                   createT={"Muokkaa"}
                 />
                 <Button
+                  size="sm"
                   onClick={() => {
                     props.setCompleted(id);
                   }}
@@ -71,6 +72,7 @@ export default function Cards(props) {
                   Tehtävä valmis!
                 </Button>
                 <Button
+                  size="sm"
                   style={{ margin: "5px" }}
                   variant="outline-danger"
                   onClick={() => {

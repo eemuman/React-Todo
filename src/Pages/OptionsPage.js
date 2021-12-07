@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import ColumnnoDND from "../Objects/ColumnnoDND";
+import { Card } from "react-bootstrap";
+import CardnoDnD from "../Objects/CardnoDnD";
 
 export default function OptionsPage(props) {
   const location = useLocation();
   const initFilteredResults = () => {
-    if (props.cards.filter !== null) {
-      const res = props.cards.filter(
+    if (props.CurCards.filter != null) {
+      const res = props.CurCards.filter(
         (card) => card.tag === location.state.filterValue
       );
       return res;
@@ -22,17 +23,28 @@ export default function OptionsPage(props) {
   };
   const [filteredResults, setFilteredResults] = useState(initFilteredResults);
 
+  const setCompletedFiltered = (id) => {
+    props.setCompleted(id);
+    setFilteredResults((prevArray) =>
+      prevArray.filter((cards) => cards.id !== id)
+    );
+  };
+
   return (
-    <div>
-      <ColumnnoDND
-        cards={filteredResults}
-        delete={deleteCards}
-        upCard={props.upCard}
-        setCompleted={props.setCompleted}
-      />
+    <>
+      <Card border="light" style={{ width: "50%", margin: "0 auto" }}>
+        {filteredResults.map((kortti) => (
+          <CardnoDnD
+            {...kortti}
+            delete={deleteCards}
+            upCard={props.updCard}
+            setCompleted={setCompletedFiltered}
+          />
+        ))}
+      </Card>{" "}
       {filteredResults.length === 0 && (
         <h1 style={{ textAlign: "center" }}>EI HAKUTULOKSIA</h1>
       )}
-    </div>
+    </>
   );
 }

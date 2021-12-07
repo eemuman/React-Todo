@@ -2,6 +2,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import ThisModal from "../Objects/Modal";
 import Column from "../Objects/Column";
 import React from "react";
+import { Col, Row } from "react-bootstrap";
 
 export default function MainPage(props) {
   var createT = "Lisää tehtävä";
@@ -28,32 +29,18 @@ export default function MainPage(props) {
   return (
     <div>
       <div>
-        <ThisModal
-          upData={props.upData}
-          createT={createT}
-          BtnStyle="primary"
-          BtnSize="lg"
-        />
+        <ThisModal upData={props.upData} createT={createT} />
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Column
-          draggableid={"new"}
-          cards={props.CurCards}
-          delete={props.delete}
-          upCard={props.upCard}
-          setCompleted={props.setCompleted}
-        />
-        <Column
-          draggableid={"completed"}
-          cards={props.CurCompletedCards}
-          delete={props.delete}
-          upCard={props.upCard}
-          setCompleted={props.setCompleted}
-        />
-      </DragDropContext>
-      {props.CurCards.length === 0 && (
-        <h1 style={{ textAlign: "center" }}>TEHTÄVÄLISTA ON TYHJÄ!</h1>
-      )}
+      <Row>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Col>
+            <Column draggableid={"UUSIMMAT"} {...props} />
+          </Col>
+          <Col>
+            <Column draggableid={"VALMIIKSI MERKATUT"} {...props} />
+          </Col>
+        </DragDropContext>
+      </Row>
     </div>
   );
 }
