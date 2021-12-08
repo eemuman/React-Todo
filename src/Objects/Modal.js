@@ -23,8 +23,6 @@ export default function ThisModal(props) {
   return (
     <>
       <Button
-        size="sm"
-        variant={props.BtnStyle}
         onClick={() => {
           setShow(true);
           flushState(props.title, props.text, props.tag);

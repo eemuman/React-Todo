@@ -3,12 +3,20 @@ import { Card } from "react-bootstrap";
 import { Droppable } from "react-beautiful-dnd";
 import Cards from "./Card";
 import CardCompleted from "./CardCompleted";
+import ColumnChooser from "./ColumnChooser";
 
 export default function Column(props) {
-  if (props.draggableid === "VALMIIKSI MERKATUT") {
+  console.log(props.columns[props.columnid]);
+  if (props.columnid === 1) {
     return (
       <Card style={{ textAlign: "center" }}>
-        <Card.Header as="h4">{props.draggableid}</Card.Header>
+        <Card.Header as="h4">
+          <ColumnChooser
+            columnid={props.columnid}
+            setColumn={props.setColumn}
+            columns={props.columns}
+          />
+        </Card.Header>
         <Card.Body>
           {props.CurCompletedCards.map((kortti) => (
             <CardCompleted {...kortti} delete={props.compDelete} />
@@ -22,11 +30,17 @@ export default function Column(props) {
   }
 
   return (
-    <Droppable droppableId={props.draggableid}>
+    <Droppable droppableId={props.columns[props.columnid]}>
       {(provided) => (
         <div {...provided.droppableProps} ref={provided.innerRef}>
           <Card style={{ textAlign: "center" }}>
-            <Card.Header as="h4">{props.draggableid}</Card.Header>
+            <Card.Header as="h4">
+              <ColumnChooser
+                columnid={props.columnid}
+                setColumn={props.setColumn}
+                columns={props.columns}
+              />
+            </Card.Header>
             <Card.Body>
               {props.CurCards.map((kortti, index) => (
                 <Cards

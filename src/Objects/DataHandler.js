@@ -10,10 +10,15 @@ export default function DataHandler() {
   const [cards, setCards] = useState([]);
   const [completedCards, setCompletedCards] = useState([]);
   const [id, setId] = useState(0);
+  const [columns, setColumns] = useState([
+    "UUSIMMAT",
+    "VALMIIT",
+    "TEST1",
+    "TEST2",
+  ]);
 
   const updCards = (newTitle, newText, newTag) => {
     const thisCreateDate = new Date();
-
     setId(id + 1);
     var data = {
       id: id,
@@ -66,6 +71,7 @@ export default function DataHandler() {
     setCards: setCards,
     setCompleted: setCompleted,
     compDelete: compDelete,
+    columns: columns,
   };
 
   const optionProps = {
