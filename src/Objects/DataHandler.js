@@ -1,111 +1,76 @@
-import React, { useState } from "react";
-import { Routes, Route, HashRouter } from "react-router-dom";
-import AboutPage from "../Pages/AboutPage";
-import OptionsPage from "../Pages/OptionsPage";
-import MainPage from "../Pages/MainPage";
-import Navbar from "./Navbar";
-import { Container, Card } from "react-bootstrap";
+const axios = require("axios").default;
 
-export default function DataHandler() {
-  const [cards, setCards] = useState([]);
-  const [completedCards, setCompletedCards] = useState([]);
-  const [id, setId] = useState(0);
-  const [columns, setColumns] = useState([
-    "UUSIMMAT",
-    "VALMIIT",
-    "TEST1",
-    "TEST2",
-  ]);
+export const fetchCards = async (columnid) => {
+  try {
+    let data = await axios.get("http://localhost:3010/cards", {
+      params: {
+        columnid: columnid,
+      },
+    });
+    if (data.data !== null) {
+      return data.data;
+    } else {
+      return [];
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  const updCards = (newTitle, newText, newTag) => {
+export const updCards = async (newTitle, newText, newTag) => {
+  try {
     const thisCreateDate = new Date();
-    setId(id + 1);
-    var data = {
-      id: id,
-      dragId: id.toString(),
-      key: id.toString(),
+    let res = await axios.post("http://localhost:3010/cards", {
       title: newTitle,
       text: newText,
-      tag: newTag,
+      tags: newTag,
       curDate: thisCreateDate,
-      removeCard: deleteCards,
-    };
-    setCards((prevArray) => [data, ...prevArray]);
-  };
-
-  const deleteCards = (id) => {
-    setCards((prevArray) => prevArray.filter((cards) => cards.id !== id));
-  };
-  const compDelete = (id) => {
-    setCompletedCards((prevArray) =>
-      prevArray.filter((cards) => cards.id !== id)
-    );
-  };
-
-  const setCompleted = (id) => {
-    var completed = cards.find((card) => card.id === id);
-    setCards((prevArray) => prevArray.filter((cards) => cards.id !== id));
-    setCompletedCards((prevArray) => [completed, ...prevArray]);
-  };
-
-  const updCard = (newTitle, newText, id, newTag, newDate) => {
-    setCards((prevArray) => {
-      var index = prevArray.findIndex((card) => card.id === id);
-
-      if (index !== -1) {
-        prevArray[index].title = newTitle;
-        prevArray[index].text = newText;
-        prevArray[index].tag = newTag;
-        prevArray[index].curDate = newDate;
-      }
-      return prevArray;
+      columnid: 0,
     });
-  };
+    return res.data.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  const mainProps = {
-    upData: updCards,
-    CurCards: cards,
-    CurCompletedCards: completedCards,
-    delete: deleteCards,
-    updCard: updCard,
-    setCards: setCards,
-    setCompleted: setCompleted,
-    compDelete: compDelete,
-    columns: columns,
-  };
+export const getColumns = async () => {
+  try {
+    let data = await axios.get("http://localhost:3010/columns");
+    return data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  const optionProps = {
-    CurCards: cards,
-    delete: deleteCards,
-    updCard: updCard,
-    setCards: setCards,
-    setCompleted: setCompleted,
-  };
+export const deleteCards = async (id) => {
+  try {
+    let res = axios.delete(`http://localhost:3010/cards/${id}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  return (
-    <div>
-      <Container>
-        <Card>
-          <>
-            <HashRouter>
-              <Navbar />
-              <Routes>
-                <Route path="/" element={<MainPage {...mainProps} />} />
-                <Route path="/About" element={<AboutPage />} />
-                <Route
-                  exact
-                  path="/Options"
-                  element={<OptionsPage {...optionProps} />}
-                />
-                <Route
-                  path="/Options/:tag"
-                  element={<OptionsPage {...optionProps} />}
-                />
-              </Routes>
-            </HashRouter>
-          </>
-        </Card>
-      </Container>
-    </div>
-  );
-}
+export const setCompleted = async (id) => {
+  try {
+    let res = axios.patch(`http://localhost:3010/cards/${id}`, {
+      columnid: 1,
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updCard = async (id, newTitle, newText, newTag, newDate) => {
+  try {
+    let res = axios.patch(`http://localhost:3010/cards/${id}`, {
+      title: newTitle,
+      text: newText,
+      tags: newTag,
+      curDate: newDate,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

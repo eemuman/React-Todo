@@ -8,9 +8,8 @@ import ReactTimeAgo from "react-time-ago";
 export default function Cards(props) {
   const [title, setTitle] = useState(props.title);
   const [text, setText] = useState(props.text);
-  const [tags, setTags] = useState(props.tag);
+  const [tags, setTags] = useState(props.tags);
   const [id] = useState(props.id);
-  const [dragId] = useState(props.dragId);
   const [curDate, setCurDate] = useState(props.curDate);
 
   var upData = (newTitle, newText, newTag) => {
@@ -21,12 +20,20 @@ export default function Cards(props) {
   };
 
   useEffect(() => {
-    props.upCard(title, text, id, tags, curDate);
-  });
+    props.upCard(id, title, text, tags, curDate);
+  }, [curDate, tags, title, text, id]);
+
+  useEffect(() => {
+    console.log(props.title + " " + props.text + " " + props.tags);
+    setTitle(props.title);
+    setText(props.text);
+    setTags(props.tags);
+    setCurDate(props.curDate);
+  }, [props.title, props.text, props.tags, props.curDate]);
 
   return (
     <div>
-      <Draggable draggableId={dragId} index={props.index}>
+      <Draggable draggableId={id.toString()} index={props.index}>
         {(provided) => (
           <div
             ref={provided.innerRef}
