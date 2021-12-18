@@ -2,6 +2,7 @@ import { Container, Nav } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 export default function navbar() {
+  /*Yksinkertainen nav-bar joka on yläreunassa. Sisältää linkit etu, haku ja tietoja sivuille */
   return (
     <Navbar bg="dark" variant="dark" fixed="top">
       <Container>

@@ -4,24 +4,31 @@ import ThisModal from "./Modal";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 
+/*TÄMÄ KORTTI ON TÄYSIN SAMA KUIN NORMAALI KORTTI, MUTTA ILMAN DND FUNKTIONAALISUUTTA, KÄYTETÄÄN SEARCHPAGELLA*/
+
 export default function Cards(props) {
   const [title, setTitle] = useState(props.title);
   const [text, setText] = useState(props.text);
-  const [tags, setTags] = useState(props.tag);
+  const [tags, setTags] = useState(props.tags);
   const [id] = useState(props.id);
   const [curDate, setCurDate] = useState(props.curDate);
 
-  var upData = (newTitle, newText, newTag) => {
+  var upData = async (newTitle, newText, newTag, newColumnId) => {
+    const newDate = new Date().toLocaleString();
     setTitle(newTitle);
     setText(newText);
     setTags(newTag);
-    setCurDate(new Date());
+    setCurDate(newDate);
+    /*Kortin data päivitetty, lähetetään se 'databaseen'*/
+    await props.upCard(id, newTitle, newText, newTag, newDate, newColumnId);
   };
 
   useEffect(() => {
-    props.upCard(title, text, id, tags, curDate);
-  });
-
+    setTitle(props.title);
+    setText(props.text);
+    setTags(props.tags);
+    setCurDate(props.curDate);
+  }, [props.title, props.text, props.tags, props.curDate]);
   return (
     <div>
       <Card
@@ -74,7 +81,8 @@ export default function Cards(props) {
           </Button>
         </div>
         <Card.Footer className="text-muted">
-          Muokattu: <ReactTimeAgo date={curDate} timeStyle="round" />
+          <ReactTimeAgo date={Date.parse(curDate)} timeStyle="round" />{" "}
+          {curDate}
         </Card.Footer>
       </Card>
     </div>

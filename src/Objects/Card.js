@@ -1,36 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import ThisModal from "./Modal";
 import { Draggable } from "react-beautiful-dnd";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 
+/* KORTTI OBJEKTI, TÄSSÄ NÄYTETÄÄN KAIKKI KORTIN SISÄINEN DATA HIENOSSA KORTTINÄKYMÄSSÄ*/
+
 export default function Cards(props) {
+  /*Asetaan data stateen..*/
   const [title, setTitle] = useState(props.title);
   const [text, setText] = useState(props.text);
   const [tags, setTags] = useState(props.tags);
   const [id] = useState(props.id);
   const [curDate, setCurDate] = useState(props.curDate);
+  const [columnId, setColumnId] = useState(props.columnid);
 
-  var upData = (newTitle, newText, newTag) => {
+  /*Kun päivitetään modalin kautta kortin dataa, päivitetään statet tämän avulla*/
+  var upData = async (newTitle, newText, newTag, newColumnId) => {
+    const newDate = new Date().toLocaleString();
     setTitle(newTitle);
     setText(newText);
     setTags(newTag);
-    setCurDate(new Date());
+    setColumnId(newColumnId);
+    setCurDate(newDate);
+    /*Kortin data päivitetty, lähetetään se 'databaseen'*/
+    await props.upCard(id, newTitle, newText, newTag, newDate, newColumnId);
   };
 
-  useEffect(() => {
-    props.upCard(id, title, text, tags, curDate);
-  }, [curDate, tags, title, text, id]);
-
-  useEffect(() => {
-    console.log(props.title + " " + props.text + " " + props.tags);
-    setTitle(props.title);
-    setText(props.text);
-    setTags(props.tags);
-    setCurDate(props.curDate);
-  }, [props.title, props.text, props.tags, props.curDate]);
-
+  /*Renderöidään kortti, löytyy myös napit muokkaamiselle, valmiiksi merkkaamiselle ja poistamiselle*/
   return (
     <div>
       <Draggable draggableId={id.toString()} index={props.index}>
@@ -61,14 +59,17 @@ export default function Cards(props) {
               </Card.Body>
               <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <ThisModal
+                  //Luodaan kortin sisälle myös modal elementti, jolla sitä voidaan muokata
                   BtnStyle="outline-primary"
                   title={title}
                   text={text}
                   tag={tags}
+                  columnid={columnId}
                   upData={upData}
                   createT={"Muokkaa"}
                 />
                 <Button
+                  //Valmiiksi merkkaus nappi
                   size="sm"
                   onClick={() => {
                     props.setCompleted(id);
@@ -79,6 +80,7 @@ export default function Cards(props) {
                   Tehtävä valmis!
                 </Button>
                 <Button
+                  //Poistamiseen tehty nappi
                   size="sm"
                   style={{ margin: "5px" }}
                   variant="outline-danger"
@@ -90,7 +92,10 @@ export default function Cards(props) {
                 </Button>
               </div>
               <Card.Footer className="text-muted">
-                Muokattu: <ReactTimeAgo date={curDate} timeStyle="round" />
+                Muokattu:{" "}
+                <ReactTimeAgo date={Date.parse(curDate)} timeStyle="round" />{" "}
+                <br />
+                {curDate}
               </Card.Footer>
             </Card>
           </div>

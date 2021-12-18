@@ -4,12 +4,16 @@ import { Card, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 
+/*VALMIS KORTTI, MUUTEN SAMA KUIN NORMAALI KORTTI, MUTTA TÄSSÄ VAIN ASETETAAN DATA NÄKYVILLE JA SITÄ EI VOI ENÄÄN MUOKKAA*/
+
 export default function Cards(props) {
   const [title] = useState(props.title);
   const [text] = useState(props.text);
-  const [tags] = useState(props.tag);
+  const [tags] = useState(props.tags);
   const [id] = useState(props.id);
   const [curDate] = useState(props.curDate);
+
+  /*TÄSSÄ KORTTINÄKYMÄSSÄ ON KORTILLA VIHREÄT REUNAT JA PELKÄSTÄÄN POISTA NAPPI. MUUTEN SAMA KUIN ALKUPERÄINEN*/
 
   return (
     <div>
@@ -44,7 +48,8 @@ export default function Cards(props) {
           </Button>
         </div>
         <Card.Footer className="text-muted">
-          Muokattu: <ReactTimeAgo date={curDate} timeStyle="round" />
+          <ReactTimeAgo date={Date.parse(curDate)} timeStyle="round" />{" "}
+          {curDate}
         </Card.Footer>
       </Card>
     </div>

@@ -1,87 +1,88 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Card } from "react-bootstrap";
 import { Droppable } from "react-beautiful-dnd";
 import Cards from "./Card";
 import CardCompleted from "./CardCompleted";
 import ColumnChooser from "./ColumnChooser";
-import {
-  fetchCards,
-  getColumns,
-  deleteCards,
-  setCompleted,
-  updCard,
-} from "./DataHandler";
+import { deleteCards, setCompleted, updCard } from "./DataHandler";
+
+/*TÄLLÄ FUNKTIOLLA LUODAAN KOLUMNIT, JOTA RENDERÖIDÄÄN 2 KAPPALETTA PÄÄSIVUN NÄKYMÄSSÄ */
 
 export default function Column(props) {
-  const [columns, setColumns] = useState([]);
-  const [curCards, setCards] = useState([]);
-
+  /* Tämän avustusfunktion avulla, kun poistetaan kortti poista-näppäimella tullaan tänne.
+  Eli, ensiksi poistetaan se 'databasesta' ja lähetetään crdUpdateen sen id, jotta saadaan triggeröityä korttien uudelleenhaku päänäkymässä. */
   const deleteCard = async (id) => {
     await deleteCards(id);
+    console.log("HERE + " + id);
     props.setUpdated(id);
   };
 
+  /* Tämän avustusfunktion avulla, kun merkataan kortti valmiiksi kortin Tehtävä valmis-näppäimella tullaan tänne.
+  Eli, ensiksi Merkataan se valmiiksi  'databaseen' ja lähetetään crdUpdateen sen id, jotta saadaan triggeröityä korttien uudelleenhaku päänäkymässä. */
   const setCardCompleted = async (id) => {
     await setCompleted(id);
     props.setUpdated(id);
   };
 
+  /* Tämän avustusfunktion avulla, kun korttia on muokattu ja painettu tallennusnäppäintä kortissa tullaan tänne.
+  Eli, ensiksi tallennetaan muutettu data 'databaseen' ja lähetetään crdUpdateen sen id, jotta saadaan triggeröityä korttien uudelleenhaku päänäkymässä. */
   const updateCard = async (id, ...newData) => {
     await updCard(id, ...newData);
-    props.setUpdated(newData);
+    props.setUpdated(id);
   };
 
-  useEffect(() => {
-    async function fetchColCards() {
-      try {
-        setColumns(await getColumns());
-        let curCards = await fetchCards(props.columnid);
-        setCards([...curCards]);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchColCards();
-  }, [props.columnid, props.updated]);
-
-  if (props.columnid === 1) {
+  /*Jos käytetään VALMIIT Kolumnia, niin renderöidään tämä lista, jossa käytetään cardcompletedeja ja ollaan ilman DND funktionaalisuutta
+  Kolumnin yläreunassa on headerina valintavalikko, josta voidaan vaihtaa kätevästi haluttua kolumnia (columnchooser) elementti. Sen jälkeen bodyn sisällä renderöidään halutun kolumnin kortit */
+  if (props.columnid === 0) {
     return (
       <Card style={{ textAlign: "center" }}>
         <Card.Header as="h4">
-          <ColumnChooser
+          <ColumnChooser //Luodaan kolumninvalinta elemenetti
+            otherColumn={props.otherColumn}
             columnid={props.columnid}
             setColumn={props.setColumn}
-            columns={columns}
+            columns={props.columns}
           />
         </Card.Header>
         <Card.Body>
-          {curCards.map((kortti) => (
-            <CardCompleted
-              key={kortti.id.toString()}
-              {...kortti}
-              delete={deleteCard}
-              updated={props.updated}
-            />
-          ))}
+          {
+            props.curCards.length === 0 && (
+              <h2>TEHTÄVÄLISTA ON TYHJÄ!</h2>
+            ) /*Tehtävälista on tyhjä, näytetään tämä */
+          }
+          {props.curCards.map(
+            (
+              kortti //Mapataan kortit kolumnin sisälle
+            ) => (
+              <CardCompleted
+                key={kortti.id.toString()}
+                {...kortti}
+                delete={deleteCard}
+              />
+            )
+          )}
         </Card.Body>
       </Card>
     );
   }
 
+  /*Muut, nimestä tai muista muuttujista riippumatta renderöidään tällä. Sisällöltään täysin sama kuin yllä oleva*/
   return (
-    <Droppable droppableId={columns[props.columnid]}>
+    <Droppable droppableId={props.columnid.toString()}>
       {(provided) => (
         <div {...provided.droppableProps} ref={provided.innerRef}>
           <Card style={{ textAlign: "center" }}>
             <Card.Header as="h4">
-              <ColumnChooser
+              <ColumnChooser //Luodaan kolumninvalinta elemenetti
+                otherColumn={props.otherColumn}
                 columnid={props.columnid}
                 setColumn={props.setColumn}
-                columns={columns}
+                columns={props.columns}
               />
             </Card.Header>
             <Card.Body>
-              {curCards.map((kortti, index) => (
+              {props.curCards.length === 0 && <h2>TEHTÄVÄLISTA ON TYHJÄ!</h2>}
+              {props.curCards.map((kortti, index) => (
                 <Cards
                   key={kortti.id.toString()}
                   index={index}
@@ -89,7 +90,6 @@ export default function Column(props) {
                   delete={deleteCard}
                   setCompleted={setCardCompleted}
                   upCard={updateCard}
-                  updated={props.updated}
                 />
               ))}
 
