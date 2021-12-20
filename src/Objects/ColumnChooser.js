@@ -8,15 +8,14 @@ export default function ColumnChooser(props) {
     <Form.Control
       as="select"
       onChange={(e) => {
-        props.setColumn(
-          //Kun valitaan eri kolumni, asetetaan sen indexi kyseisen columnin id:ksi, jotta tiedetään mitä renderöidään.
-          props.columns.findIndex((column) => column.name === e.target.value)
+        //Kun valitaan eri kolumni, asetetaan sen id kyseisen columnin id:ksi, jotta tiedetään mitä renderöidään.
+        let newId = props.columns.find(
+          (column) => column.name === e.target.value
         );
+        props.setColumn(newId.id);
       }}
-      value={
-        props.columns.length > 0 ? props.columns[props.columnid].name : " " //Laitetaan näkyviin sen hetkisen kolumnin nimi. Ladattaessa " "
-      }
       aria-label="Column"
+      value={props.columns.find((col) => col.id === props.columnid).name}
     >
       {props.columns.map((name, index) => {
         //Mapataan vaihtoehdot, jos vaihtoehto on toisessa kolumnissa käytössä, on se harmaana ja sitä ei voi valita

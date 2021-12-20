@@ -1,68 +1,41 @@
 {
   "cards": [
     {
-      "title": "12",
-      "text": "1",
+      "title": "Tehtävä #1",
+      "text": "Tehtävä #1",
       "tags": "1",
-      "curDate": "12/15/2021, 10:07:29 AM",
+      "curDate": "12/18/2021, 11:57:31 AM",
       "columnid": 1,
       "isCompleted": 0,
       "id": 1
     },
     {
-      "title": "23",
-      "text": "23",
-      "tags": "23",
-      "curDate": "12/15/2021, 10:08:41 AM",
-      "columnid": 0,
-      "isCompleted": 1,
-      "id": 2
-    },
-    {
-      "title": "1",
-      "text": "2",
-      "tags": "3",
-      "curDate": "12/15/2021, 10:43:16 AM",
+      "title": "Tehtävä #2",
+      "text": "Tehtävä #2",
+      "tags": "2",
+      "curDate": "12/18/2021, 11:57:47 AM",
       "columnid": 1,
       "isCompleted": 0,
-      "id": 3
-    },
-    {
-      "title": "4",
-      "text": "4",
-      "tags": "4",
-      "curDate": "12/15/2021, 10:43:23 AM",
-      "columnid": 2,
-      "isCompleted": 0,
-      "id": 4
+      "id": 2
     }
   ],
   "columns": [
     {
       "name": "VALMIIT",
       "id": 0,
-      "order": [
-        2
-      ]
+      "order": []
     },
     {
       "name": "UUDET",
       "id": 1,
       "order": [
-        1,
-        3
+        2,
+        1
       ]
     },
     {
-      "name": "TestiKolumni",
+      "name": "TYHJÄKOLUMNI",
       "id": 2,
-      "order": [
-        4
-      ]
-    },
-    {
-      "name": "Tyhjä",
-      "id": 3,
       "order": []
     }
   ],

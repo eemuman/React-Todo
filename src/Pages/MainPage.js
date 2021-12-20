@@ -225,6 +225,7 @@ export default function MainPage(props) {
               otherColumn={secondColumnid}
               setColumn={setFirstCol}
               columns={columns}
+              updated={cardUpd}
               {...props}
             />
           </Col>

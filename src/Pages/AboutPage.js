@@ -21,7 +21,7 @@ export default function AboutPage() {
         <h5>Sivustolla käytetyt kirjastot:</h5>
         <span>
           React, React-Router, React-Bootstrap, React-Beautiful-DnD,
-          React-TimeAgo
+          React-TimeAgo, JSON-server
         </span>
       </Card.Body>
     </Container>

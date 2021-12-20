@@ -13,22 +13,21 @@ export default function Column(props) {
   Eli, ensiksi poistetaan se 'databasesta' ja lähetetään crdUpdateen sen id, jotta saadaan triggeröityä korttien uudelleenhaku päänäkymässä. */
   const deleteCard = async (id) => {
     await deleteCards(id);
-    console.log("HERE + " + id);
-    props.setUpdated(id);
+    props.setUpdated(Math.random());
   };
 
   /* Tämän avustusfunktion avulla, kun merkataan kortti valmiiksi kortin Tehtävä valmis-näppäimella tullaan tänne.
   Eli, ensiksi Merkataan se valmiiksi  'databaseen' ja lähetetään crdUpdateen sen id, jotta saadaan triggeröityä korttien uudelleenhaku päänäkymässä. */
   const setCardCompleted = async (id) => {
     await setCompleted(id);
-    props.setUpdated(id);
+    props.setUpdated(Math.random());
   };
 
   /* Tämän avustusfunktion avulla, kun korttia on muokattu ja painettu tallennusnäppäintä kortissa tullaan tänne.
   Eli, ensiksi tallennetaan muutettu data 'databaseen' ja lähetetään crdUpdateen sen id, jotta saadaan triggeröityä korttien uudelleenhaku päänäkymässä. */
   const updateCard = async (id, ...newData) => {
     await updCard(id, ...newData);
-    props.setUpdated(id);
+    props.setUpdated(Math.random());
   };
 
   /*Jos käytetään VALMIIT Kolumnia, niin renderöidään tämä lista, jossa käytetään cardcompletedeja ja ollaan ilman DND funktionaalisuutta
